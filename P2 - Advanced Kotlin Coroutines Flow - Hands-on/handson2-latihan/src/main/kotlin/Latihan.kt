@@ -17,12 +17,17 @@ fun temperatureSensor(): Flow<Int> = flow {
 fun main() = runBlocking {
     // TODO: Gunakan operator flow untuk:
     // 1. Filter suhu > 30°C saja
-    // 2. Transform (map) menjadi string warning, contoh:
-    //    "⚠️ WARNING: Suhu tinggi terdeteksi: 35°C"
+    // 2. Transform (map) menjadi string warning
     // 3. Tampilkan setiap warning dengan collect
 
     temperatureSensor()
-        // .filter { ... }
-        // .map { ... }
-        // .collect { ... }
+        .filter { temperature ->
+            temperature > 30
+        }
+        .map { temperature ->
+            "⚠️ WARNING: Suhu tinggi terdeteksi: ${temperature}°C"
+        }
+        .collect { warning ->
+            println(warning)
+        }
 }
